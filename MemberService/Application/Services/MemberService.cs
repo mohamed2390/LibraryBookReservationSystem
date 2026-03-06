@@ -27,6 +27,9 @@ public class MemberService : IMemberService
       if (await _repository.ExistsAsync(dto.Username))
          throw new InvalidOperationException("Username already exists");
 
+      if (await _repository.ExistsByEmailAsync(dto.Email))
+         throw new InvalidOperationException("Email already exists");
+
       var member = new Member
       {
          Id = Guid.NewGuid(),
@@ -58,6 +61,7 @@ public class MemberService : IMemberService
       var members = await _repository.GetAllAsync() ?? Enumerable.Empty<Member>();
       return members.Select(m => new MemberDto     
       {
+         Id = m.Id,
          Username = m.Username,
          Email = m.Email,
          Role = m.Role

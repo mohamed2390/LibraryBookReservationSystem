@@ -61,7 +61,20 @@ public class MemberServiceTests
                 .Should().ThrowAsync<InvalidOperationException>()
                 .WithMessage("Username already exists");
    }
+   [Fact]
+   public async Task RegisterAsync_ShouldThrow_WhenEmailAlreadyExists()
+   {
+      // Arrange
+      var dto = new RegisterDto { Username = "newuser", Email = "duplicate@test.com", Password = "password123" };
 
+      _mockRepo.Setup(r => r.ExistsAsync(It.IsAny<string>())).ReturnsAsync(false);
+      _mockRepo.Setup(r => r.ExistsByEmailAsync(dto.Email)).ReturnsAsync(true);   // ← simulates duplicate email
+
+      // Act & Assert
+      await _sut.Invoking(s => s.RegisterAsync(dto))
+                .Should().ThrowAsync<InvalidOperationException>()
+                .WithMessage("Email already exists");
+   }
    [Fact]
    public async Task LoginAsync_ShouldReturnToken_WhenCredentialsAreValid()
    {

@@ -28,4 +28,6 @@ public class MemberRepository : IMemberRepository
 
    public async Task<bool> ExistsAsync(string username)
        => await _context.Members.AnyAsync(m => m.Username == username);
+   public async Task<bool> ExistsByEmailAsync(string email)
+    => await _context.Members.AnyAsync(m => m.Email == email);
 }

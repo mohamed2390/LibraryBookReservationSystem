@@ -1,9 +1,10 @@
 ﻿using FluentAssertions;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
 using MemberService.Application.DTOs;
 using MemberService.Application.Interfaces;
 using MemberService.Controllers;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
 using Xunit;
 
 namespace MemberService.Tests.Controllers;
@@ -22,28 +23,48 @@ public class MembersControllerTests
    [Fact]
    public async Task Register_ShouldReturnOk_WhenRegistrationSucceeds()
    {
-      var dto = new RegisterDto { Username = "test", Email = "test@test.com", Password = "123456" };
-      var response = new AuthResponseDto { Token = "token", Role = "Member" };
+      var dto = new RegisterDto { Username = "testuser", Email = "test@test.com", Password = "123456" };
+      var response = new AuthResponseDto { Token = "fake-token", Role = "Member" };
       _mockService.Setup(s => s.RegisterAsync(dto)).ReturnsAsync(response);
 
       var result = await _controller.Register(dto);
 
-      var okResult = result as OkObjectResult;
-      okResult.Should().NotBeNull();
-      okResult!.Value.Should().BeEquivalentTo(response);
+      var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
+      okResult.Value.Should().BeEquivalentTo(response);
    }
 
    [Fact]
-   public async Task Register_ShouldReturnBadRequest_WhenExceptionThrown()
+   public async Task Register_ShouldReturnConflict_WithProblemDetails_WhenInvalidOperationExceptionIsThrown()
    {
-      _mockService.Setup(s => s.RegisterAsync(It.IsAny<RegisterDto>()))
+      // Arrange
+      var dto = new RegisterDto
+      {
+         Username = "duplicateuser",
+         Email = "test@test.com",
+         Password = "password123"
+      };
+
+      // Simulate the service throwing the exception (same as real code)
+      _mockService.Setup(s => s.RegisterAsync(dto))
                   .ThrowsAsync(new InvalidOperationException("Username already exists"));
 
-      var result = await _controller.Register(new RegisterDto());
+      // Act
+      var result = await _controller.Register(dto);
 
-      var badRequest = result as BadRequestObjectResult;
-      badRequest.Should().NotBeNull();
-      badRequest!.Value.Should().Be("Username already exists");
+      // Assert - Check it's Conflict (409) with ProblemDetails
+      var conflictResult = result.Should()
+                                 .BeOfType<ConflictObjectResult>()
+                                 .Subject;
+
+      conflictResult.StatusCode.Should().Be(409);
+
+      var problemDetails = conflictResult.Value.Should()
+                                               .BeOfType<ProblemDetails>()
+                                               .Subject;
+
+      problemDetails.Title.Should().Be("Conflict occurred, Bad Request");
+      problemDetails.Detail.Should().Be("Username already exists");
+      problemDetails.Status.Should().Be(StatusCodes.Status409Conflict);
    }
 
    [Fact]

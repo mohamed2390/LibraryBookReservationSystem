@@ -43,6 +43,14 @@ public class MemberRepositoryTests : IDisposable
       var exists = await _sut.ExistsAsync("existing");
       exists.Should().BeTrue();
    }
+   [Fact]
+   public async Task ExistsByEmailAsync_ShouldReturnTrue_WhenEmailExists()
+   {
+      _context.Members.Add(new Member { Email = "duplicate@test.com" });
+      await _context.SaveChangesAsync();
 
+      var exists = await _sut.ExistsByEmailAsync("duplicate@test.com");
+      exists.Should().BeTrue();
+   }
    public void Dispose() => _context.Dispose();
 }

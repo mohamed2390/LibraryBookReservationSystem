@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using MemberService.Application.DTOs;
+﻿using MemberService.Application.DTOs;
 using MemberService.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MemberService.Controllers;
 
@@ -26,7 +27,12 @@ public class MembersController : ControllerBase
       }
       catch (InvalidOperationException ex)
       {
-         return BadRequest(ex.Message);
+         return Conflict(new ProblemDetails
+         {
+            Title = "Conflict occurred, Bad Request",
+            Detail = ex.Message,
+            Status = StatusCodes.Status409Conflict,
+         });
       }
    }
 

@@ -9,4 +9,5 @@ public interface IMemberRepository
    Task<Member?> GetByIdAsync(Guid id);
    Task AddAsync(Member member);
    Task<bool> ExistsAsync(string username);
+   Task<bool> ExistsByEmailAsync(string email);
 }
