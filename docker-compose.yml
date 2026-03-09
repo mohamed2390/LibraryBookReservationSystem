@@ -1,0 +1,13 @@
+services:
+  librarymembersystem.api:
+    image: ${DOCKER_REGISTRY-}librarymembersystemapi
+    build:
+      context: .
+      dockerfile: LibraryMemberSystem.Api/Dockerfile
+
+  librarybookreservationsystem.api:
+    image: ${DOCKER_REGISTRY-}librarybookreservationsystemapi
+    build:
+      context: .
+      dockerfile: LibraryBookReservationSystem.Api/Dockerfile
+
