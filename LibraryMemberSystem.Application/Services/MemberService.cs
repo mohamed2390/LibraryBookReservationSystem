@@ -43,7 +43,7 @@ public class MemberService : IMemberService
       await _repository.AddAsync(member);
       _logger.LogInformation("User registered: {Username}", dto.Username);
 
-       return ("User registered:" + dto.Username + "Successfully");      
+       return ("User registered: " + dto.Username );      
    }
 
    public async Task<AuthResponseDto?> LoginAsync(LoginDto dto)
