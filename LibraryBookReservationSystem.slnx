@@ -1,15 +1,19 @@
 <Solution>
+  <Folder Name="/Src/">
+    <Project Path="LibraryBookReservationSystem.Api/LibraryBookReservationSystem.Api.csproj" />
+    <Project Path="LibraryBookReservationSystem.Application/LibraryBookReservationSystem.Application.csproj" Id="2de987af-3ee7-4d2d-b1b8-71109471a5be" />
+    <Project Path="LibraryBookReservationSystem.Core/LibraryBookReservationSystem.Core.csproj" Id="2ee7938a-4bd1-4bf4-8f24-50b27f2bbed4" />
+    <Project Path="LibraryBookReservationSystem.Infrastructure/LibraryBookReservationSystem.Infrastructure.csproj" Id="afbd7ec4-72a0-418f-899c-e9d1dc6b4111" />
+    <Project Path="LibraryMemberSystem.Api/LibraryMemberSystem.Api.csproj" Id="166909f1-8626-40db-a1e4-519be70b8bcb" />
+    <Project Path="LibraryMemberSystem.Application/LibraryMemberSystem.Application.csproj" Id="87ae972c-055e-43b3-b99b-e88e8a376ab7" />
+    <Project Path="LibraryMemberSystem.Core/LibraryMemberSystem.Core.csproj" Id="7ae2d678-2c14-45c6-a816-d3a1970cbd40" />
+    <Project Path="LibraryMemberSystem.Infrastructure/LibraryMemberSystem.Infrastructure.csproj" Id="e3f228c8-7d74-4a2f-871b-ed42d8b1e3c5" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="LibraryBookReservationSystem.UnitTests/LibraryBookReservationSystem.UnitTests.csproj" />
+    <Project Path="LibraryMemberSystem.UnitTests/LibraryMemberSystem.UnitTests.csproj" Id="fc38e3f8-0ce5-41c8-94db-9ce68588789a" />
+  </Folder>
   <Project Path="docker-compose.dcproj">
     <Build />
   </Project>
-  <Project Path="LibraryBookReservationSystem.Api/LibraryBookReservationSystem.Api.csproj" />
-  <Project Path="LibraryBookReservationSystem.Application/LibraryBookReservationSystem.Application.csproj" Id="2de987af-3ee7-4d2d-b1b8-71109471a5be" />
-  <Project Path="LibraryBookReservationSystem.Core/LibraryBookReservationSystem.Core.csproj" Id="2ee7938a-4bd1-4bf4-8f24-50b27f2bbed4" />
-  <Project Path="LibraryBookReservationSystem.Infrastructure/LibraryBookReservationSystem.Infrastructure.csproj" Id="afbd7ec4-72a0-418f-899c-e9d1dc6b4111" />
-  <Project Path="LibraryBookReservationSystem.UnitTests/LibraryBookReservationSystem.UnitTests.csproj" />
-  <Project Path="LibraryMemberSystem.Api/LibraryMemberSystem.Api.csproj" Id="166909f1-8626-40db-a1e4-519be70b8bcb" />
-  <Project Path="LibraryMemberSystem.Application/LibraryMemberSystem.Application.csproj" Id="87ae972c-055e-43b3-b99b-e88e8a376ab7" />
-  <Project Path="LibraryMemberSystem.Core/LibraryMemberSystem.Core.csproj" Id="7ae2d678-2c14-45c6-a816-d3a1970cbd40" />
-  <Project Path="LibraryMemberSystem.Infrastructure/LibraryMemberSystem.Infrastructure.csproj" Id="e3f228c8-7d74-4a2f-871b-ed42d8b1e3c5" />
-  <Project Path="LibraryMemberSystem.UnitTests/LibraryMemberSystem.UnitTests.csproj" Id="fc38e3f8-0ce5-41c8-94db-9ce68588789a" />
 </Solution>
