@@ -53,7 +53,7 @@ public class MemberService : IMemberService
          return null;
 
       var token = _tokenService.GenerateToken(member.Id, member.Username, member.Role);
-      return new AuthResponseDto { Token = token, Role = member.Role };
+      return new AuthResponseDto { Token = token };
    }
 
    public async Task<IEnumerable<MemberDto>> GetAllMembersAsync()

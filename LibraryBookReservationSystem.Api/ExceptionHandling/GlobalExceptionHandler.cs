@@ -63,12 +63,12 @@ public class GlobalExceptionHandler : IExceptionHandler
         }
 
         // Show detailed error + TraceId and stack only in Development
-        if (env?.IsDevelopment() == true)
-        {
-            problemDetails.Detail = exception.Message;
-            problemDetails.Extensions["traceId"] = httpContext.TraceIdentifier;
-            problemDetails.Extensions["stackTrace"] = exception.StackTrace;
-        }
+        //if (env?.IsDevelopment() == true)
+        //{
+        //    problemDetails.Detail = exception.Message;
+        //    problemDetails.Extensions["traceId"] = httpContext.TraceIdentifier;
+        //    problemDetails.Extensions["stackTrace"] = exception.StackTrace;
+        //}
 
         httpContext.Response.ContentType = "application/problem+json";
         httpContext.Response.StatusCode = status;
