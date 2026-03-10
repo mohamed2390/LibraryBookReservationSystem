@@ -26,31 +26,31 @@ builder.Services.AddSwaggerGen(c =>
       Version = "v1"
    });
 
-   // Add JWT Bearer definition
-   c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
-   {
-      Description = "Enter JWT token in the format: Bearer {your token here}",
-      Name = "Authorization",
-      In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-      Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
-      Scheme = "Bearer"
-   });
+   //// Add JWT Bearer definition
+   //c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+   //{
+   //   Description = "Enter JWT token in the format: Bearer {your token here}",
+   //   Name = "Authorization",
+   //   In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+   //   Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+   //   Scheme = "Bearer"
+   //});
 
-   // Apply security globally to all endpoints
-   c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
-    {
-        {
-            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
-            {
-                Reference = new Microsoft.OpenApi.Models.OpenApiReference
-                {
-                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-        }
-    });
+   //// Apply security globally to all endpoints
+   //c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+   // {
+   //     {
+   //         new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+   //         {
+   //             Reference = new Microsoft.OpenApi.Models.OpenApiReference
+   //             {
+   //                 Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+   //                 Id = "Bearer"
+   //             }
+   //         },
+   //         Array.Empty<string>()
+   //     }
+   // });
 });
 
 // === FLUENT VALIDATION AUTO SETUP ===
@@ -85,44 +85,44 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
        };
 
        // === GLOBAL ERROR HANDLING ===
-       options.Events = new JwtBearerEvents
-       {
-          // 401 Unauthorized (missing/invalid/expired token)
-          OnChallenge = async context =>
-          {
-             context.HandleResponse(); // Prevent default redirect
+       //options.Events = new JwtBearerEvents
+       //{
+       //   // 401 Unauthorized (missing/invalid/expired token)
+       //   OnChallenge = async context =>
+       //   {
+       //      context.HandleResponse(); // Prevent default redirect
 
-             context.Response.ContentType = "application/problem+json";
-             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+       //      context.Response.ContentType = "application/problem+json";
+       //      context.Response.StatusCode = StatusCodes.Status401Unauthorized;
 
-             var problem = new ProblemDetails
-             {
-                Title = "Unauthorized",
-                Detail = "Authentication token is missing, invalid, or expired. Please login again.",
-                Status = StatusCodes.Status401Unauthorized,
-                Instance = context.HttpContext.Request.Path
-             };
+       //      var problem = new ProblemDetails
+       //      {
+       //         Title = "Unauthorized",
+       //         Detail = "Authentication token is missing, invalid, or expired. Please login again.",
+       //         Status = StatusCodes.Status401Unauthorized,
+       //         Instance = context.HttpContext.Request.Path
+       //      };
 
-             await context.Response.WriteAsJsonAsync(problem);
-          },
+       //      await context.Response.WriteAsJsonAsync(problem);
+       //   },
 
-          // 403 Forbidden (valid token but insufficient role - e.g. Member calling Admin endpoint)
-          OnForbidden = async context =>
-          {
-             context.Response.ContentType = "application/problem+json";
-             context.Response.StatusCode = StatusCodes.Status403Forbidden;
+       //   // 403 Forbidden (valid token but insufficient role - e.g. Member calling Admin endpoint)
+       //   OnForbidden = async context =>
+       //   {
+       //      context.Response.ContentType = "application/problem+json";
+       //      context.Response.StatusCode = StatusCodes.Status403Forbidden;
 
-             var problem = new ProblemDetails
-             {
-                Title = "Forbidden",
-                Detail = "You do not have permission to access this resource. Admin role is required.",
-                Status = StatusCodes.Status403Forbidden,
-                Instance = context.HttpContext.Request.Path
-             };
+       //      var problem = new ProblemDetails
+       //      {
+       //         Title = "Forbidden",
+       //         Detail = "You do not have permission to access this resource. Admin role is required.",
+       //         Status = StatusCodes.Status403Forbidden,
+       //         Instance = context.HttpContext.Request.Path
+       //      };
 
-             await context.Response.WriteAsJsonAsync(problem);
-          }
-       };
+       //      await context.Response.WriteAsJsonAsync(problem);
+       //   }
+       //};
     });
 
 builder.Services.AddAuthorization();

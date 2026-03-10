@@ -14,9 +14,10 @@ public class LibraryDbContext : DbContext
    protected override void OnModelCreating(ModelBuilder modelBuilder)
    {
       modelBuilder.Entity<Reservation>()
-          .HasOne(r => r.Book)
-          .WithMany()
-          .HasForeignKey(r => r.BookId);
+                   .HasOne(r => r.Book)
+                   .WithOne() 
+                   .HasForeignKey<Reservation>(r => r.BookId)
+                   .OnDelete(DeleteBehavior.Restrict);
 
       modelBuilder.Entity<Book>().HasData(
             new Book
